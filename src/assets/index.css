@@ -68,3 +68,37 @@
 .ant-input-affix-wrapper .ant-input-suffix {
     right: 3px !important;
 }
+
+.gif-card {
+    width: 300px;
+    margin: 10px;
+    filter: drop-shadow(2px 4px 6px black);
+    -webkit-filter: drop-shadow(2px 4px 6px black);
+}
+
+.gif-header>a>img {
+    border-radius: 20px 20px 0px 0px;
+    width: 298px;
+    height: 223px;
+}
+
+.gif-card>.gif-body {
+    height: 95px;
+    padding: 20px;
+    background: #ffff;
+}
+
+.gif-body {
+    border-radius: 3px 5px 10px 10px;
+}
+
+.gif-body>h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+    white-space: nowrap;
+}
+
+.gif-body>a {
+    cursor: pointer;
+}
