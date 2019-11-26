@@ -47,8 +47,7 @@ export default class App extends Component {
                         {
                             this.state.trendData.length > 0 ?
                                 this.state.trendData.map(value => {
-                                    console.log(value);
-                                    return <GifCard original_url={value.images.original.url} key={value.id} title={value.title} web_url={value.url} />
+                                    return <GifCard key={value.id} original_url={value.images.original.url} id={value.id} title={value.title} web_url={value.url} />
                                 }) : null
                         }
                     </Row>
