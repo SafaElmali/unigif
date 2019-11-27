@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap');
+html,
+body {
+    width: 100%!important;
+    height: auto!important;
+}
 
 .header-props {
     height: 300px;
