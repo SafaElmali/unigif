@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Input } from 'antd';
+
 const { Search } = Input;
 
 const SearchArea = (props) => {

@@ -7,7 +7,7 @@ import debounce from 'lodash.debounce';
 import SearchArea from "./components/SearchArea";
 import GifCard from "./components/GifCard";
 
-const { Footer, Sider, Content } = Layout;
+const { Content } = Layout;
 const { Text } = Typography;
 
 export default class App extends Component {
@@ -15,14 +15,18 @@ export default class App extends Component {
         super();
         this.state = {
             trendData: [],
-            offset: 0
+            offset: 0,
+            isSearch: false
         }
 
-        window.onscroll = debounce(() => {
-            if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-                this.handleMoreTrends();
-            }
-        }, 100);
+        // If user makes search onScroll will be disabled
+        if (!this.state.isSearch) {
+            window.onscroll = debounce(() => {
+                if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+                    this.handleMoreTrends();
+                }
+            }, 100);
+        }
     }
 
     componentDidMount() {
@@ -56,7 +60,6 @@ export default class App extends Component {
                 this.setState({
                     trendData: [...this.state.trendData, ...res.data.data]
                 });
-                console.log(this.state.trendData);
             })
             .catch((err) => {
                 console.log(err);
