@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Typography, Row, Col } from 'antd';
+import { Layout, Typography, Row, Col, Button } from 'antd';
 import { getTrends } from './utils/api';
 import env from './config/env';
 import axios from 'axios';
@@ -15,8 +15,9 @@ export default class App extends Component {
         super();
         this.state = {
             trendData: [],
+            searchData: [],
             offset: 0,
-            isSearch: false
+            isSearch: false,
         }
 
         // If user makes search onScroll will be disabled
@@ -27,6 +28,8 @@ export default class App extends Component {
                 }
             }, 100);
         }
+
+        this.onSearch = this.onSearch.bind(this);
     }
 
     componentDidMount() {
@@ -38,10 +41,14 @@ export default class App extends Component {
         const { offset } = this.state;
 
         getTrends().then(res => {
-            this.setState({
-                trendData: res.data,
-                offset: offset + 20
-            });
+            if (res.meta.status === 200) {
+                this.setState({
+                    trendData: res.data,
+                    offset: offset + 20
+                });
+            } else {
+                console.log(res);
+            }
         });
     }
 
@@ -56,17 +63,27 @@ export default class App extends Component {
 
         axios.get(trendURL)
             .then(res => {
-                console.log(res);
-                this.setState({
-                    trendData: [...this.state.trendData, ...res.data.data]
-                });
+                if (res.status === 200) {
+                    this.setState({
+                        trendData: [...this.state.trendData, ...res.data.data]
+                    });
+                }
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
+    onSearch(responseArr) {
+        this.setState({
+            isSearch: true,
+            searchData: responseArr.data,
+            trendData: []
+        });
+    }
+
     render() {
+        let { isSearch, searchData, trendData } = this.state;
         return (
             <Layout>
                 <Content>
@@ -80,17 +97,31 @@ export default class App extends Component {
                                     <Text strong className="header-text text-color">Make universal search to find funny GIFs, reaction GIFs, unique GIFs and more.</Text>
                                 </Col>
                             </Row>
-                            <SearchArea />
+                            <SearchArea onSearch={this.onSearch} />
                         </Col>
                     </Row>
-                    <Row type="flex" justify='center'>
+                    <Row type="flex" justify='space-around'>
                         {
-                            this.state.trendData.length > 0 ?
-                                this.state.trendData.map((value, index) => {
+                            isSearch ? (searchData.length <= 0 ? <p>No Search Data</p> :
+                                searchData.map((value, index) => {
                                     return <GifCard key={index} original_url={value.images.original.url} id={index} title={value.title} web_url={value.url} />
-                                }) : null
+                                })) :
+                                trendData.length <= 0 ?
+                                    (
+                                        <p>No trend Data</p>
+                                    ) :
+                                    trendData.map((value, index) => {
+                                        return <GifCard key={index} original_url={value.images.original.url} id={index} title={value.title} web_url={value.url}/>
+                                    })
                         }
                     </Row>
+                    {isSearch ?
+                        <Row type="flex" justify='center' className="button-props">
+                            <Button type="primary" shape="round" icon="plus-circle" size='large'>
+                                Load More
+                        </Button>
+                        </Row> : null
+                    }
                 </Content>
             </Layout>
         )

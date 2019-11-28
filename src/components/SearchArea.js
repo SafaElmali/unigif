@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
 import { Row, Col, Input } from 'antd';
+import axios from 'axios';
 
 const { Search } = Input;
+const giphy_key = "ehOAhqPcPnlajfSrPBlgqIfaF28BSvYj"
+let searchURL = `https://api.giphy.com/v1/gifs/search?api_key=${giphy_key}&limit=20`;
 
 const SearchArea = (props) => {
+    console.log(props.onRef(this));
     const [loading, setLoading] = useState(false);
+    const [offset, setOffset] = useState(0);
 
     function handleSearchInput(value) {
-        console.log(value);
+        if (value.trim() === '') {
+            return;
+        }
+
+        const { onSearch } = props;
+        setLoading(true);
+        searchURL = searchURL + `&q=${value}&offset=${offset}`;
+
+        axios.get(searchURL).then(res => {
+            if (res.status === 200) {
+                onSearch(res.data);
+                setLoading(false);
+            }
+        });
     }
 
     return (
@@ -18,6 +36,7 @@ const SearchArea = (props) => {
                     onSearch={handleSearchInput}
                     className="search-props"
                     loading={loading}
+                    allowClear
                 />
             </Col>
         </Row>

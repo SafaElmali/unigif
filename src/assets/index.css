@@ -1,7 +1,7 @@
 html,
 body {
-    width: 100%!important;
-    height: auto!important;
+    width: 100% !important;
+    height: auto !important;
 }
 
 .header-props {
@@ -105,4 +105,17 @@ body {
 
 .gif-body>a {
     cursor: pointer;
+}
+
+.button-props {
+    margin-bottom: 20px;
+}
+
+.ant-input-clear-icon+i {
+    margin-left: 0px !important;
+}
+
+.ant-input-clear-icon {
+    position: absolute;
+    right: 120%;
 }
