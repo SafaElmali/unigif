@@ -7,7 +7,6 @@ const giphy_key = "ehOAhqPcPnlajfSrPBlgqIfaF28BSvYj"
 let searchURL = `https://api.giphy.com/v1/gifs/search?api_key=${giphy_key}&limit=20`;
 
 const SearchArea = (props) => {
-    console.log(props.onRef(this));
     const [loading, setLoading] = useState(false);
     const [offset, setOffset] = useState(0);
 
