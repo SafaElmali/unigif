@@ -15,13 +15,14 @@ const SearchArea = (props) => {
             return;
         }
 
-        const { onSearch } = props;
+        const { onResetStates, getSearch } = props;
         setLoading(true);
         searchURL = searchURL + `&q=${value}&offset=${offset}`;
 
         axios.get(searchURL).then(res => {
             if (res.status === 200) {
-                onSearch(res.data);
+                onResetStates();
+                getSearch(res.data);
                 setLoading(false);
             }
         });

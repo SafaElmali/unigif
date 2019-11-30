@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Layout, Typography, Row, Col, Button } from 'antd';
-import { getTrends } from './utils/api';
 import env from './config/env';
 import axios from 'axios';
 import debounce from 'lodash.debounce';
@@ -29,31 +28,16 @@ export default class App extends Component {
             }, 100);
         }
 
-        this.onSearch = this.onSearch.bind(this);
+        this.onResetStates = this.onResetStates.bind(this);
+        this.getSearchData = this.getSearchData.bind(this);
     }
 
     componentDidMount() {
-        this.handleDisplayTrends();
-    }
-
-    // Triggered when component mounted
-    handleDisplayTrends() {
-        const { offset } = this.state;
-
-        getTrends().then(res => {
-            if (res.meta.status === 200) {
-                this.setState({
-                    trendData: res.data,
-                    offset: offset + 20
-                });
-            } else {
-                console.log(res);
-            }
-        });
+        this.handleMoreTrends();
     }
 
     // Triggered when user reaches bottom of the screen
-    handleMoreTrends() {
+    handleMoreTrends = () => {
         const { offset } = this.state;
         this.setState({
             offset: offset + 20
@@ -74,12 +58,21 @@ export default class App extends Component {
             });
     };
 
-    onSearch(responseArr) {
+    // reset the states on each search
+    onResetStates = () => {
         this.setState({
             isSearch: true,
-            searchData: responseArr.data,
+            searchData: [],
             trendData: []
         });
+
+    }
+
+    // 
+    getSearchData = responseArr => {
+        this.setState({
+            searchData: [...this.state.searchData, ...responseArr.data]
+        })
     }
 
     render() {
@@ -97,10 +90,10 @@ export default class App extends Component {
                                     <Text strong className="header-text text-color">Make universal search to find funny GIFs, reaction GIFs, unique GIFs and more.</Text>
                                 </Col>
                             </Row>
-                            <SearchArea onSearch={this.onSearch} />
+                            <SearchArea onResetStates={this.onResetStates} getSearch={this.getSearchData} />
                         </Col>
                     </Row>
-                    <Row type="flex" justify='space-around'>
+                    <Row type="flex" justify='start'>
                         {
                             isSearch ? (searchData.length <= 0 ? <p>No Search Data</p> :
                                 searchData.map((value, index) => {
@@ -111,7 +104,7 @@ export default class App extends Component {
                                         <p>No trend Data</p>
                                     ) :
                                     trendData.map((value, index) => {
-                                        return <GifCard key={index} original_url={value.images.original.url} id={index} title={value.title} web_url={value.url}/>
+                                        return <GifCard key={index} original_url={value.images.original.url} id={index} title={value.title} web_url={value.url} />
                                     })
                         }
                     </Row>
