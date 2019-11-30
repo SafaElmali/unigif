@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
 import { Row, Col, Input } from 'antd';
 import axios from 'axios';
+import { searchURL } from '../utils/api';
 
 const { Search } = Input;
-const giphy_key = "ehOAhqPcPnlajfSrPBlgqIfaF28BSvYj"
-let searchURL = `https://api.giphy.com/v1/gifs/search?api_key=${giphy_key}&limit=20`;
 
 const SearchArea = (props) => {
+    const { onResetStates, getSearch } = props;
     const [loading, setLoading] = useState(false);
-    const [offset, setOffset] = useState(0);
 
-    function handleSearchInput(value) {
+    const handleSearchInput = value => {
         if (value.trim() === '') {
             return;
         }
 
-        const { onResetStates, getSearch } = props;
         setLoading(true);
-        searchURL = searchURL + `&q=${value}&offset=${offset}`;
+        const url = searchURL + `&q=${value}&offset=0`;
 
-        axios.get(searchURL).then(res => {
+        axios.get(url).then(res => {
             if (res.status === 200) {
                 onResetStates();
-                getSearch(res.data);
+                getSearch(res.data, value);
                 setLoading(false);
             }
         });

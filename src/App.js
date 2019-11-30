@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Layout, Typography, Row, Col, Button } from 'antd';
-import env from './config/env';
 import axios from 'axios';
 import debounce from 'lodash.debounce';
 import SearchArea from "./components/SearchArea";
 import GifCard from "./components/GifCard";
+import { searchURL, trendURL } from './utils/api';
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -15,7 +15,9 @@ export default class App extends Component {
         this.state = {
             trendData: [],
             searchData: [],
-            offset: 0,
+            searchValue: '',
+            trendOffset: 0,
+            searchOffset: 20,
             isSearch: false,
         }
 
@@ -38,18 +40,15 @@ export default class App extends Component {
 
     // Triggered when user reaches bottom of the screen
     handleMoreTrends = () => {
-        const { offset } = this.state;
-        this.setState({
-            offset: offset + 20
-        });
+        const { trendOffset } = this.state;
+        const url = trendURL + `&offset=${trendOffset}`;
 
-        const trendURL = `${env.API_URL}?api_key=${env.GIPHY_KEY}&limit=20&offset=${offset}`;
-
-        axios.get(trendURL)
+        axios.get(url)
             .then(res => {
                 if (res.status === 200) {
                     this.setState({
-                        trendData: [...this.state.trendData, ...res.data.data]
+                        trendData: [...this.state.trendData, ...res.data.data],
+                        trendOffset: trendOffset + 20
                     });
                 }
             })
@@ -58,21 +57,40 @@ export default class App extends Component {
             });
     };
 
-    // reset the states on each search
+    // Triggered if user clicks 'Load More' button  
+    onLoadMoreGifs = () => {
+        const { searchValue, searchOffset } = this.state;
+        const url = searchURL + `&q=${searchValue}&offset=${searchOffset}`;
+
+        axios.get(url)
+            .then(res => {
+                if (res.status === 200) {
+                    this.setState({
+                        searchData: [...this.state.searchData, ...res.data.data],
+                        searchOffset: searchOffset + 20
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    // Reset the states on each search
     onResetStates = () => {
         this.setState({
             isSearch: true,
             searchData: [],
             trendData: []
         });
-
     }
 
-    // 
-    getSearchData = responseArr => {
+    // Get user specific searched gifs
+    getSearchData = (responseArr, searchValue) => {
         this.setState({
-            searchData: [...this.state.searchData, ...responseArr.data]
-        })
+            searchData: [...this.state.searchData, ...responseArr.data],
+            searchValue: searchValue
+        });
     }
 
     render() {
@@ -110,9 +128,9 @@ export default class App extends Component {
                     </Row>
                     {isSearch ?
                         <Row type="flex" justify='center' className="button-props">
-                            <Button type="primary" shape="round" icon="plus-circle" size='large'>
+                            <Button type="primary" shape="round" icon="plus-circle" size='large' onClick={this.onLoadMoreGifs}>
                                 Load More
-                        </Button>
+                            </Button>
                         </Row> : null
                     }
                 </Content>
