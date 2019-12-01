@@ -39,7 +39,7 @@ export default class App extends Component {
         this.handleMoreTrends();
     }
 
-    // Triggered when user reaches bottom of the screen
+    // Triggered when component initialized && user reaches bottom of the screen
     handleMoreTrends = () => {
         const { trendOffset } = this.state;
         const url = trendURL + `&offset=${trendOffset}`;
