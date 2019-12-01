@@ -21,4 +21,3 @@ const GifCard = (props) => {
 }
 
 export default GifCard;
-

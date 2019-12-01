@@ -4,7 +4,6 @@ import axios from 'axios';
 import { searchURL } from '../utils/api';
 import { toastError } from '../utils/toaster';
 
-
 const { Search } = Input;
 
 const SearchArea = (props) => {
