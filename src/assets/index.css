@@ -25,6 +25,38 @@ body {
     font-size: 22px;
 }
 
+.display-trend-props {
+    width: 250px;
+    height: 75px;
+    background-color: #333;
+    border: 1px solid #333;
+    margin: auto;
+    margin-top: 40px;
+    border-radius: 15px;
+    position: inherit;
+    margin-bottom: 30px;
+    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.trend-text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    border-radius: 50px;
+    color: #fff !important;
+    width: 150px;
+    transition: background .2s;
+}
+
+.trend-text:hover {
+    background: #fff;
+    color: #000 !important;
+    cursor: pointer;
+}
+
 .text-center-row {
     text-align: center;
 }
@@ -50,7 +82,6 @@ body {
     height: 50px;
     line-height: 1.42857;
     padding: 6px 20px;
-    vertical-align: middle;
     transition: background-color .2s;
 }
 
@@ -69,8 +100,8 @@ body {
     transition: all .2s;
 }
 
-.ant-input-affix-wrapper .ant-input-suffix {
-    right: 3px !important;
+.gif-card-parent {
+    margin-top: 30px;
 }
 
 .gif-card {
@@ -111,6 +142,10 @@ body {
     margin-bottom: 20px;
 }
 
+.ant-input-affix-wrapper .ant-input-suffix {
+    right: 3px !important;
+}
+
 .ant-input-clear-icon+i {
     margin-left: 0px !important;
 }
@@ -118,4 +153,24 @@ body {
 .ant-input-clear-icon {
     position: absolute;
     right: 120%;
+}
+
+@media only screen and (max-width: 576px) {
+    .ant-back-top {
+        right: 3% !important;
+        background: #fff !important;
+        left: 0 !important;
+        width: -webkit-fill-available !important;
+        height: 50px !important;
+        bottom: 0 !important;
+    }
+
+    .ant-back-top-content {
+        margin: auto !important;
+        margin-top: 5px !important;
+        width: 100px !important;
+        background: #6caab9 !important;
+        border-color: aliceblue !important;
+        border: 1px solid aliceblue !important;
+    }
 }

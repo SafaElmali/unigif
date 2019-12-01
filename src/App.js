@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Typography, Row, Col, Button } from 'antd';
+import { Layout, Typography, Row, Col, Button, BackTop } from 'antd';
 import axios from 'axios';
 import debounce from 'lodash.debounce';
 import SearchArea from "./components/SearchArea";
@@ -23,16 +23,15 @@ export default class App extends Component {
         }
 
         // If user makes search onScroll will be disabled
-        if (!this.state.isSearch) {
-            window.onscroll = debounce(() => {
-                if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-                    this.handleMoreTrends();
-                }
-            }, 100);
-        }
+        window.onscroll = debounce(() => {
+            if ((window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) && !this.state.isSearch) {
+                this.handleMoreTrends();
+            }
+        }, 100);
 
         this.onResetStates = this.onResetStates.bind(this);
         this.getSearchData = this.getSearchData.bind(this);
+        this.onDisplayTrends = this.onDisplayTrends.bind(this);
     }
 
     componentDidMount() {
@@ -58,6 +57,12 @@ export default class App extends Component {
             });
     };
 
+    onDisplayTrends() {
+        this.setState({ trendOffset: 0, trendData: [], searchData: [], isSearch: false, searchOffset: 20 }, () => {
+            this.handleMoreTrends();
+        });
+    }
+
     // Triggered if user clicks 'Load More' button  
     onLoadMoreGifs = () => {
         const { searchValue, searchOffset } = this.state;
@@ -82,7 +87,8 @@ export default class App extends Component {
         this.setState({
             isSearch: true,
             searchData: [],
-            trendData: []
+            trendData: [],
+            searchOffset: 20
         });
     }
 
@@ -98,8 +104,9 @@ export default class App extends Component {
         let { isSearch, searchData, trendData } = this.state;
         return (
             <Layout>
+                <BackTop />
                 <Content>
-                    <Row className="header">
+                    <Row type='flex' justify='center'>
                         <Col xs={24} className="header-props">
                             <Row className="header-row-props text-center-row">
                                 <Col xs={24}>
@@ -108,19 +115,28 @@ export default class App extends Component {
                                 <Col xs={24}>
                                     <Text strong className="header-text text-color">Make universal search to find funny GIFs, reaction GIFs, unique GIFs and more.</Text>
                                 </Col>
+                                <Col xs={24}>
+                                    <SearchArea onResetStates={this.onResetStates} getSearch={this.getSearchData} />
+                                </Col>
+                                {isSearch ?
+                                    <Col xs={24}>
+                                        <div className="display-trend-props">
+                                            <Text className="trend-text" onClick={this.onDisplayTrends}>Display Trends</Text>
+                                        </div>
+                                    </Col> : null
+                                }
                             </Row>
-                            <SearchArea onResetStates={this.onResetStates} getSearch={this.getSearchData} />
                         </Col>
                     </Row>
-                    <Row type="flex" justify='center'>
+                    <Row type="flex" justify='center' className="gif-card-parent">
                         {
-                            isSearch ? (searchData.length <= 0 ? <p>No Search Data</p> :
+                            isSearch ? (searchData.length <= 0 ? <p>Loading..</p> :
                                 searchData.map((value, index) => {
                                     return <GifCard key={index} original_url={value.images.original.url} id={index} title={value.title} web_url={value.url} />
                                 })) :
                                 trendData.length <= 0 ?
                                     (
-                                        <p>No trend Data</p>
+                                        <p>Loading..</p>
                                     ) :
                                     trendData.map((value, index) => {
                                         return <GifCard key={index} original_url={value.images.original.url} id={index} title={value.title} web_url={value.url} />
