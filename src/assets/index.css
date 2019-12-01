@@ -76,8 +76,8 @@ body {
 .gif-card {
     width: 300px;
     margin: 10px;
-    filter: drop-shadow(2px 4px 6px black);
-    -webkit-filter: drop-shadow(2px 4px 6px black);
+    filter: drop-shadow(2px 4px 6px lightgray);
+    -webkit-filter: drop-shadow(2px 4px 6px lightgray);
 }
 
 .gif-header>a>img {

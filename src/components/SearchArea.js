@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Row, Col, Input } from 'antd';
 import axios from 'axios';
 import { searchURL } from '../utils/api';
+import { toastError } from '../utils/toaster';
+
 
 const { Search } = Input;
 
@@ -23,7 +25,10 @@ const SearchArea = (props) => {
                 getSearch(res.data, value);
                 setLoading(false);
             }
-        });
+        })
+            .catch((err) => {
+                toastError(err);
+            });
     }
 
     return (

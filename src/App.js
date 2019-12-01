@@ -5,6 +5,7 @@ import debounce from 'lodash.debounce';
 import SearchArea from "./components/SearchArea";
 import GifCard from "./components/GifCard";
 import { searchURL, trendURL } from './utils/api';
+import { toastError } from './utils/toaster';
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -53,7 +54,7 @@ export default class App extends Component {
                 }
             })
             .catch((err) => {
-                console.log(err);
+                toastError(err);
             });
     };
 
@@ -72,7 +73,7 @@ export default class App extends Component {
                 }
             })
             .catch((err) => {
-                console.log(err);
+                toastError(err);
             });
     }
 
@@ -111,7 +112,7 @@ export default class App extends Component {
                             <SearchArea onResetStates={this.onResetStates} getSearch={this.getSearchData} />
                         </Col>
                     </Row>
-                    <Row type="flex" justify='start'>
+                    <Row type="flex" justify='center'>
                         {
                             isSearch ? (searchData.length <= 0 ? <p>No Search Data</p> :
                                 searchData.map((value, index) => {
