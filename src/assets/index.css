@@ -154,23 +154,3 @@ body {
     position: absolute;
     right: 120%;
 }
-
-@media only screen and (max-width: 576px) {
-    .ant-back-top {
-        right: 3% !important;
-        background: #fff !important;
-        left: 0 !important;
-        width: -webkit-fill-available !important;
-        height: 50px !important;
-        bottom: 0 !important;
-    }
-
-    .ant-back-top-content {
-        margin: auto !important;
-        margin-top: 5px !important;
-        width: 100px !important;
-        background: #6caab9 !important;
-        border-color: aliceblue !important;
-        border: 1px solid aliceblue !important;
-    }
-}
