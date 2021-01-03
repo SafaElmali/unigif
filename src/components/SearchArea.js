@@ -6,8 +6,7 @@ import { toastError } from '../utils/toaster';
 
 const { Search } = Input;
 
-const SearchArea = (props) => {
-    const { onResetStates, getSearch } = props;
+const SearchArea = ({ onResetStates, getSearchData}) => {
     const [loading, setLoading] = useState(false);
 
     const handleSearchInput = value => {
@@ -21,7 +20,7 @@ const SearchArea = (props) => {
         axios.get(url).then(res => {
             if (res.status === 200) {
                 onResetStates();
-                getSearch(res.data, value);
+                getSearchData(res.data, value);
                 setLoading(false);
             }
         })
