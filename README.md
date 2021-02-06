@@ -18,3 +18,7 @@
 ## TODO List
 
 - [ ] react-content-loader 
+
+## License
+
+Unigif is [MIT licensed](./LICENSE).
