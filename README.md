@@ -21,4 +21,4 @@
 
 ## License
 
-Unigif is [MIT licensed](./LICENSE).
+unigif is [MIT licensed](./LICENSE).
