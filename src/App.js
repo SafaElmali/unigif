@@ -57,7 +57,7 @@ const App = () => {
   };
 
   // Triggered if user clicks 'Load More' button
-  const onLoadMoreGifs = async () => {
+  const handleLoadMoreGifs = async () => {
     try {
       const res = await gifService.fetchMoreGifs(searchValue, offset);
       setData((prevData) => prevData.concat(res.data.data));
@@ -67,6 +67,13 @@ const App = () => {
     }
   };
 
+  const handleDisplayTrends = () => {
+    setOffset(0);
+    setData([]);
+    setIsSearch(false);
+    handleLoadData();
+  };
+
   return (
     <Layout>
       <BackTop />
@@ -74,6 +81,8 @@ const App = () => {
         <Header
           handleResetStates={handleResetStates}
           getSearchData={getSearchData}
+          isSearch={isSearch}
+          handleDisplayTrends={handleDisplayTrends}
         />
         {data.length <= 0 ? (
           <p>Loading..</p>
@@ -97,7 +106,7 @@ const App = () => {
               shape="round"
               icon="plus-circle"
               size="large"
-              onClick={onLoadMoreGifs}
+              onClick={handleLoadMoreGifs}
             >
               Load More
             </Button>
