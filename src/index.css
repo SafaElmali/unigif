@@ -1,0 +1,170 @@
+html,
+body {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.header-props {
+  height: 300px;
+  background-color: rgba(28, 206, 234, 0.82);
+  background: linear-gradient(
+    -45deg,
+    rgba(147, 26, 222, 0.83) 0%,
+    rgba(28, 206, 234, 0.82) 100%
+  );
+}
+
+.header-row-props {
+  margin-top: 2%;
+}
+
+.header-brand-text {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 36px;
+}
+
+.header-text {
+  font-size: 22px;
+}
+
+.display-trend-props {
+  width: 250px;
+  height: 75px;
+  background-color: #333;
+  border: 1px solid #333;
+  margin: auto;
+  margin-top: 40px;
+  border-radius: 15px;
+  position: inherit;
+  margin-bottom: 30px;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trend__button {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  border-radius: 50px;
+  background: transparent;
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  width: 150px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.trend__button:hover {
+  background: #fff;
+  color: #000 !important;
+  cursor: pointer;
+}
+
+.text-center-row {
+  text-align: center;
+}
+
+.text-color {
+  color: #fff !important;
+}
+
+.search-area-row {
+  margin-top: 2%;
+}
+
+.search-props > input {
+  background-color: rgba(115, 186, 221, 0.35);
+  box-shadow: none;
+  border: medium none;
+  border-radius: 30px;
+  box-shadow: 0 0 0;
+  color: #ffffff;
+  display: block;
+  font-size: 20px;
+  font-weight: 300;
+  height: 50px;
+  line-height: 1.42857;
+  padding: 6px 20px;
+  transition: background-color 0.2s;
+}
+
+.search-props > span {
+  position: absolute;
+  border-radius: 50%;
+  border: none;
+  padding: 10px 15px;
+  height: 44px;
+  line-height: 30px;
+  width: 44px;
+  display: block;
+  opacity: 0.85;
+  background: #ffffff;
+  color: #666666;
+  transition: all 0.2s;
+}
+
+.gif-card-parent {
+  margin-top: 30px;
+  margin-left: 8rem;
+  padding: 30px;
+}
+
+.gif-card {
+  width: 300px;
+  margin: 10px;
+  filter: drop-shadow(2px 4px 6px lightgray);
+  -webkit-filter: drop-shadow(2px 4px 6px lightgray);
+}
+
+.gif-header > a > img {
+  border-radius: 20px 20px 0px 0px;
+  width: 298px;
+  height: 223px;
+}
+
+.gif-card > .gif-body {
+  height: 95px;
+  padding: 20px;
+  background: #ffff;
+}
+
+.gif-body {
+  border-radius: 3px 5px 10px 10px;
+}
+
+.gif-body > h4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+  white-space: nowrap;
+}
+
+.gif-body > a {
+  cursor: pointer;
+}
+
+.button-props {
+  margin-bottom: 20px;
+}
+
+.ant-input-affix-wrapper .ant-input-suffix {
+  right: 3px !important;
+}
+
+.ant-input-clear-icon + i {
+  margin-left: 0px !important;
+}
+
+.ant-input-clear-icon {
+  position: absolute;
+  right: 120%;
+}
